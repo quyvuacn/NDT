@@ -8,21 +8,32 @@
 </head>
 <body>
     <h1>Quy đổi tệ</h1>
-    <form action="">
+    <div >
         <div>
             Tệ = <input type="text" id="ndt" /> <br> <br>   
             Đ = <span id="vnd"></span>
         </div>
         <br>    
-        <button type="button" onclick="load()">Đổi</button> <br>
-    </form>
+        <button id="button" type="button" onclick="load()">Đổi</button> <br>
+    </div>
 
     <script>
+       document.getElementsByTagName("body")[0].addEventListener("keyup", function(event) {
+            event.preventDefault();
+            if (event.keyCode === 13) {
+                document.getElementById("button").click();
+            }
+        });
+            
+        function numberWithCommas(x) {
+             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
         function load(){        
             var ndt = document.querySelector('#ndt').value;          
             ndt = parseFloat(ndt)
-            vnd = Math.floor((ndt+48)*1.03*3785)
-            document.querySelector('#vnd').innerHTML = vnd 
+            vnd = Math.floor((ndt+48)*1.03*3785).toString()
+
+            document.querySelector('#vnd').innerHTML = numberWithCommas(vnd) + ' vnđ'
         } 
 
     </script>
