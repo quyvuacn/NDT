@@ -1,41 +1,43 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tính lương nhân viên</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js" integrity="sha512-7oYXeK0OxTFxndh0erL8FsjGvrl2VMDor6fVqzlLGfwOQQqTbYsGPv4ZZ15QHfSk80doyaM0ZJdvkyDcVO7KFA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
-<body>
-    <h1>Quy đổi tệ</h1>
-    <div >
-        <div>
-            Tệ = <input type="text" id="ndt" /> <br> <br>   
-            Đ = <span id="vnd"></span>
-        </div>
-        <br>    
-        <button id="button" type="button" onclick="load()">Đổi</button> <br>
-    </div>
+<body>   
+    <div ng-app="Apppayroll" ng-controller="CostController">
+        Lương : <input type="number" ng-model='wage'> $<br>
+        Kinh nghiệm : <input type="number" ng-model='ex'> $<br>
+        <span>Tiền thưởng sau thuế : {{sum | currency :''}} $</span><br>
+        <button ng-click="payroll()">Tính</button>
+        <script>
+            var app = angular.module('Apppayroll', []); 
+            app.controller('CostController',function($scope){
+                $scope.wage=0;
+                $scope.ex=0;
+                $scope.sum =0;
+                console.log($scope)
+                $scope.payroll = function(){
+                   
+                    if(this.ex<5){
+                        this.sum = (this.wage * 3 * 0.9)
+                    }else if(this.ex<=10){
+                        this.sum = (this.wage * 6 * 0.9)
+                    }else{
+                        this.sum = (this.wage * 12 * 0.9)
+                    }
 
-    <script>
-       document.getElementsByTagName("body")[0].addEventListener("keyup", function(event) {
-            event.preventDefault();
-            if (event.keyCode === 13) {
-                document.getElementById("button").click();
-            }
-        });
+                }
+
+            })
+
             
-        function numberWithCommas(x) {
-             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
-        function load(){        
-            var ndt = document.querySelector('#ndt').value;          
-            ndt = parseFloat(ndt)
-            vnd = Math.floor((ndt+48)*1.03*3785).toString()
-
-            document.querySelector('#vnd').innerHTML = numberWithCommas(vnd) + ' vnđ'
-        } 
-
-    </script>
+        </script>
+    </div>
+    
 </body>
 </html>
